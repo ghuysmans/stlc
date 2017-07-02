@@ -24,7 +24,7 @@ top_level_term:
 | LET ; x = ID ; EQUAL ; t = term ; SEMICOLON ; SEMICOLON { Grammar.Top_level_let (x, t) }
 
 term:
-| LAMBDA ; LEFT_PARENT ; x = ID ; COLON ; t = typ ; RIGHT_PARENT ; ARROW ; tt = term { Grammar.TermAbstraction (x, t, tt) }
+| LAMBDA ; LEFT_PARENT ; x = ID ; COLON ; t = typ ; RIGHT_PARENT ; DOT ; ARROW ; tt = term { Grammar.TermAbstraction (x, t, tt) }
 | LEFT_CURLY ; l = record_term ; RIGHT_CURLY { Grammar.TermRecord l }
 | i = LINT { Grammar.TermInt i }
 | LEFT_PARENT ; RIGHT_PARENT { Grammar.TermUnit }

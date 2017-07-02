@@ -1,4 +1,4 @@
-let x = (* youhou *) (fun (x : int) -> x) 2;;
+let x = (* youhou *) (fun (x : int). -> x) 2;;
 (* super commentaire
 (* imbriqué *)
 *)
