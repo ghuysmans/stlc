@@ -16,7 +16,7 @@ let rec typer env term =
     let typ_of_t1 = typer env t1 in
     let typ_of_t2 = typer env t2 in
     let typ1, typ2 = Checkutils.arrow_as_tuple typ_of_t1 in
-    Subtyping.subtyping typ_of_t2 typ1;
+    Checkutils.check_is_subtype typ_of_t2 typ1;
     typ2
   | Grammar.TermRecord l ->
     Grammar.TypeRecord(List.map (fun (x, term) -> x, (typer env term)) l)

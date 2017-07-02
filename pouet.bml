@@ -1,6 +1,6 @@
 let x = (* youhou *) (fun (x : int) -> x) 2;;
-(* super commentaire
-(* imbriqué *)
-let x = (\ (x : int). -> \ (y : int) -> y) 2 3;;
-let x = {truc="that's a string"; bidule=42};;
-*)
+let y = {truc="that's a string"; bidule=42; machin="pi"};;
+let f = fun (a: {truc: string; bidule: int}) -> a.truc;;
+let t1 = f y;;
+let z = {bidule=42; machin="pi"};;
+let t2 = f z;;

@@ -5,14 +5,10 @@ let rec subtyping s t = match (s, t) with
   | Grammar.TypeRecord(l1), Grammar.TypeRecord(l2) ->
     List.for_all (
       fun(label2, type_label2) ->
-        try
-          ignore (List.find (
-            fun(label1, type_label1) ->
-              not (label1 = label2) || subtyping type_label1 type_label2
-          )
-          l1);
-          true
-        with Not_found -> false
+        List.exists (
+          fun(label1, type_label1) ->
+            label1 = label2 && subtyping type_label1 type_label2
+        ) l1
     )
     l2
   | _, _ -> false
