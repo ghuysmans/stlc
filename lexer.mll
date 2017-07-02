@@ -15,6 +15,7 @@
 
 
 let id = ['a'-'z']['a'-'z' 'A'-'Z' '0'-'9' '_' '\'']*
+let tpid = '\'' ['a'-'z' '_']+
 let num = '0' | '-'? ['1'-'9']['0'-'9']*
 let white = [' ' '\t' '\r']
 let newline = ['\n']
@@ -22,7 +23,7 @@ let newline = ['\n']
 rule top = parse
 | white { top lexbuf }
 | newline { next_line lexbuf; top lexbuf }
-| "fun" | "\\" { Parser.LAMBDA }
+| "fun" | "lambda" | "\\" { Parser.LAMBDA }
 | '{' { Parser.LEFT_CURLY }
 | '}' { Parser.RIGHT_CURLY }
 | "." { Parser.DOT }
@@ -34,7 +35,9 @@ rule top = parse
 | "string" { Parser.STRING }
 | "let" { Parser.LET }
 | "in" { Parser.IN }
-| id as l { Parser.ID l } 
+| "type" { Parser.TYPE }
+| id as l { Parser.ID l }
+| tpid as l { Parser.TPID l }
 | ":" { Parser.COLON }
 | num as n { Parser.LINT (int_of_string n) }
 | "\"" [^'"']* "\"" as s { Parser.LSTRING s }

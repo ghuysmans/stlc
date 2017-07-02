@@ -10,7 +10,10 @@
 %token STRING
 %token LET
 %token IN
+%token TYPE
 %token <string> ID
+%token <string> TPID
+%token FORALL
 %token ARROW
 %right ARROW
 %token COLON
@@ -23,6 +26,7 @@
 
 top_level_term:
 | LET ; x = ID ; EQUAL ; t = term ; SEMICOLON ; SEMICOLON { Grammar.Top_level_let (x, t) }
+| TYPE ; x = ID ; EQUAL ; t = typ ; SEMICOLON ; SEMICOLON { Grammar.Top_level_type (x, t) }
 | EOF { raise End_of_file }
 
 term:
@@ -45,6 +49,8 @@ params:
   t params
 *)
 | t = term ; tt = term { Grammar.TermApplication (t, tt) }
+| LAMBDA ; LEFT_PARENT ; TYPE ; x = TPID ; RIGHT_PARENT ; ARROW ; t = term { Grammar.TypeAbstraction (x, t) }
+| f = term ; t = typ { Grammar.TypeApplication (f, t) }
 
 record_term:
 | x = ID ; EQUAL ; t = term { [x, t] }
@@ -55,8 +61,10 @@ record_type:
 | x = ID ; COLON ; t = typ ; SEMICOLON ; l = record_type { (x, t) :: l }
 
 typ:
+| t = ID { Grammar.TypeVariable t }
 | LEFT_PARENT ; t = typ ; RIGHT_PARENT { t }
 | INT { Grammar.TypeBase "int" }
 | STRING { Grammar.TypeBase "string" }
 | LEFT_CURLY ; t = record_type ; RIGHT_CURLY { Grammar.TypeRecord t }
 | inp = typ ; ARROW ; ret = typ { Grammar.TypeArrow (inp, ret) }
+| FORALL ; t = TPID ; DOT ; tt = typ { Grammar.TypeUniversal (t, tt) }

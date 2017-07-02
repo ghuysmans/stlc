@@ -8,3 +8,9 @@ let z = {bidule=42; machin="pi"};;
 let test = fun(f : {a: int ; b : int} -> {x : int}) -> {x = 42};;
 let g = fun(r : {a : int}) -> {x = 42 ; y = 42};;
 let z = test g;;
+
+(*
+let f (g : ('a -> int)) (x : 'a) = g x
+term = FUN(X) fun(f : X -> int) -> fun(y : int) -> f y
+type = forall X (X -> int) -> X -> int
+*)

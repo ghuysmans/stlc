@@ -1,0 +1,10 @@
+type X = Int
+
+let f = fun(x : X) -> x;;
+(*
+--> We add (f : X -> X) in the environment Gamma.
+We can replace them (or think of a better way)
+*)
+
+type X = String
+f 54;;

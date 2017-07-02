@@ -36,6 +36,11 @@ and string_of_raw_top_level_term t = match t with
       "let %s = %s;;"
       x
       (string_of_term t)
+  | Grammar.Top_level_type (x, t) ->
+    Printf.sprintf
+      "type %s = %s;;"
+      x
+      (string_of_typ t)
 
 and string_of_typ typ = match typ with
   | Grammar.TypeBase t -> t

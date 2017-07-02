@@ -6,6 +6,10 @@ let arrow_as_tuple typ = match typ with
   | Grammar.TypeArrow(typ1, typ2) -> typ1, typ2
   | _ -> failwith (Printf.sprintf "Type %s is not an arrow" (Printer.string_of_typ typ))
 
+let type_arrow_as_tuple typ = match typ with
+  | Grammar.TypeUniversal(x, t) -> x, t
+  | _ -> failwith (Printf.sprintf "Type %s is not a universally quantified type" (Printer.string_of_typ typ))
+
 let check_is_subtype typ1 typ2 =
   if not @@ Subtyping.subtyping typ1 typ2
   then failwith (Printf.sprintf
