@@ -11,13 +11,6 @@
       }
 
   let inner_comments_number = ref 0
-
-  (* basic UTF8 support *)
-  let rec count_ones ?(ct=0) n =
-    if n land 0x80 = 0 then
-      ct
-    else
-      count_ones ~ct:(ct+1) (n lsl 1)
 }
 
 
@@ -29,7 +22,7 @@ let newline = ['\n']
 rule top = parse
 | white { top lexbuf }
 | newline { next_line lexbuf; top lexbuf }
-| "fun" | "\\" | "λ" { Parser.LAMBDA }
+| "fun" | "\\" { Parser.LAMBDA }
 | '{' { Parser.LEFT_CURLY }
 | '}' { Parser.RIGHT_CURLY }
 | "." { Parser.DOT }
@@ -47,11 +40,6 @@ rule top = parse
 | "\"" [^'"']* "\"" as s { Parser.LSTRING s }
 | "->" { Parser.ARROW }
 | "(*" { comment lexbuf; top lexbuf }
-| _* as c {
-  let f = c.[0] in
-  let n = count_ones (int_of_char f) in
-  let c = String.sub (Lexing.lexeme lexbuf) 0 n in
-  failwith ("unexpected character " ^ c) }
 
 and comment = parse
   | "*)" {
