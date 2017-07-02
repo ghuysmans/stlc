@@ -5,13 +5,13 @@ let rec string_of_term term = match term with
   | Grammar.TermVariable x -> x
   | Grammar.TermAbstraction(x, typ, term) ->
     Printf.sprintf
-      "λ(%s : %s).%s"
+      "(λ(%s : %s) -> %s)"
       x
       (string_of_typ typ)
       (string_of_term term)
   | Grammar.TermApplication(term1, term2) ->
     Printf.sprintf
-      "%s %s"
+      "(%s %s)"
       (string_of_term term1)
       (string_of_term term2)
   | Grammar.TermRecord(l) ->
@@ -41,7 +41,7 @@ and string_of_typ typ = match typ with
   | Grammar.TypeBase t -> t
   | Grammar.TypeArrow(typ1, typ2) ->
     Printf.sprintf
-      "%s 🡆 %s"
+      "(%s → %s)"
       (string_of_typ typ1)
       (string_of_typ typ2)
   | Grammar.TypeRecord l ->
