@@ -1,4 +1,4 @@
-type t = (string * Grammar.typ) list
+type 'a t = (string * 'a) list
 
 let empty = [];;
 
