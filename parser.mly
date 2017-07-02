@@ -33,6 +33,16 @@ term:
 | LET ; x = ID ; EQUAL ; t = term ; IN ; tt = term { Grammar.TermLet (x, t, tt) }
 | t = term ; DOT ; id = ID { Grammar.TermProjection (t, id) }
 | i = ID { Grammar.TermVariable i }
+(*
+FIXME stratification
+term:
+  ...
+  t params
+params:
+  t
+  t params
+*)
+| t = term ; tt = term { Grammar.TermApplication (t, tt) }
 
 record_term:
 | x = ID ; EQUAL ; t = term { [x, t] }

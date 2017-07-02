@@ -1,4 +1,6 @@
 let x = (* youhou *) (fun (x : int). -> x) 2;;
 (* super commentaire
 (* imbriqué *)
+let x = (\ (x : int). -> \ (y : int). -> y) 2 3;;
+let x = {truc="that's a string"; bidule=42};;
 *)
