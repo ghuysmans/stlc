@@ -10,7 +10,6 @@ let rec read_file lexbuf =
     let typ = Typechecker.typer (!env) t in
     env := Context.add (!env) x typ;
     Printer.string_of_raw_top_level_term top |> print_endline;
-    Printf.printf "val %s : %s\n" x (Printer.string_of_typ typ);
     read_file lexbuf
   with End_of_file -> ()
 
@@ -21,6 +20,11 @@ let () =
     else
       let filename = Sys.argv.(1) in
       open_in filename
-  in read_file (Lexing.from_channel ch)
+  in read_file (Lexing.from_channel ch);
+  Context.iter (fun (name, typ) ->
+    Printf.printf "val %s : %s\n" name (Printer.string_of_typ typ)
+  ) !env
+    
+
 
 
