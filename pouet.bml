@@ -3,4 +3,8 @@ let y = {truc="that's a string"; bidule=42; machin="pi"};;
 let f = fun (a: {truc: string; bidule: int}) -> a.truc;;
 let t1 = f y;;
 let z = {bidule=42; machin="pi"};;
-let t2 = f z;;
+(* let t2 = f z;; *)
+
+let test = fun(f : {a: int ; b : int} -> {x : int}) -> {x = 42};;
+let g = fun(r : {a : int}) -> {x = 42 ; y = 42};;
+let z = test g;;
