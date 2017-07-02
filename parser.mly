@@ -16,12 +16,14 @@
 %token COLON
 %token <int> LINT
 %token <string> LSTRING
+%token EOF
 
 %start <Grammar.raw_top_level_term> top_level_term
 %%
 
 top_level_term:
 | LET ; x = ID ; EQUAL ; t = term ; SEMICOLON ; SEMICOLON { Grammar.Top_level_let (x, t) }
+| EOF { raise End_of_file }
 
 term:
 | LAMBDA ; LEFT_PARENT ; x = ID ; COLON ; t = typ ; RIGHT_PARENT ; ARROW ; tt = term { Grammar.TermAbstraction (x, t, tt) }

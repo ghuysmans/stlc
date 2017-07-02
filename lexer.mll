@@ -40,6 +40,7 @@ rule top = parse
 | "\"" [^'"']* "\"" as s { Parser.LSTRING s }
 | "->" { Parser.ARROW }
 | "(*" { comment lexbuf; top lexbuf }
+| eof { Parser.EOF }
 
 and comment = parse
   | "*)" {
